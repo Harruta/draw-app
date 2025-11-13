@@ -1,11 +1,17 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-
+import { JWT_SECRET } from "@repo/backend-common/config";
+import { CreateUserSchema, SigninSchema, CreateRoomSchema } from "@repo/common/types";
 const app = express();
 
-const JWT_SECRET = "aonetuh23324"
 app.post("/signup", (req, res) => {
   //db call
+  const data = CreateUserSchema.safeParse(req.body);
+  if (!data.success) {
+    return res.json({
+      message: "Incorrect Inputs"
+    })
+  }
 
   res.json({
     userId: "123"
@@ -13,6 +19,12 @@ app.post("/signup", (req, res) => {
 
 });
 app.post("/signin", (req, res) => {
+  const data = SigninSchema.safeParse(req.body);
+  if (!data.success) {
+    return res.json({
+      message: "Incorrect Inputs"
+    })
+  }
 
 
   const userID = 1;
@@ -27,6 +39,13 @@ app.post("/signin", (req, res) => {
 
 app.post("/room", (req, res) => {
   //db call
+  const data = CreateRoomSchema.safeParse(req.body);
+  if (!data.success) {
+    return res.json({
+      message: "Incorrect Inputs"
+    })
+  }
+
 
 
   res.json({
